@@ -1,0 +1,14 @@
+# Files where a bad or malicious change does the most damage: dependencies, CI, patches, budgets,
+# and the tool configs that decide what the checks enforce. Change the owner for a new project.
+/package.json               @estebancas
+/package-lock.json          @estebancas
+/.github/                   @estebancas
+/patches/                   @estebancas
+/.nvmrc                     @estebancas
+/.size-limit.json           @estebancas
+/eslint.config.js           @estebancas
+/tsconfig.json              @estebancas
+/vitest.config.ts           @estebancas
+/vitest.stryker.config.ts   @estebancas
+/stryker.config.json        @estebancas
+/playwright.config.ts       @estebancas

@@ -19,7 +19,7 @@ jobs:
   # `Lint / lint`); see docs/contract.md in that repo before renaming either.
   lint:
     name: Lint
-    uses: estebancas/standards/.github/workflows/lint.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/lint.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
     with:
       # generate-icons is otherwise unexercised by CI, so a bad dev-tool bump (e.g. an ESM-only
       # major) would pass every other check. Regenerate and compare to the committed icons and
@@ -37,25 +37,25 @@ jobs:
 
   test:
     name: Unit tests + build
-    uses: estebancas/standards/.github/workflows/test-build.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/test-build.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
 
   mutation:
     name: Mutation testing
-    uses: estebancas/standards/.github/workflows/mutation.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/mutation.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
 
   audit:
     name: Dependency audit
-    uses: estebancas/standards/.github/workflows/audit.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/audit.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
 
   size:
     name: Bundle size
     needs: test
-    uses: estebancas/standards/.github/workflows/size.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/size.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
 
   e2e:
     name: End-to-end
     needs: test
-    uses: estebancas/standards/.github/workflows/e2e.yml@1e25189fccd69886eb0ade75da74dcc5c173a69b # v1
+    uses: estebancas/standards/.github/workflows/e2e.yml@55793cae6dcb518b4f93eebb0c8fd4d9f3108524 # v1
     with:
       # Keep this tag equal to the installed @playwright/test version and to the image in the
       # `e2e:visual` script in package.json, so browsers and fonts match and visual baselines
@@ -77,10 +77,13 @@ jobs:
       url: https://template-pwa.example.workers.dev
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version-file: .nvmrc
-          cache: npm
+          # The deploy job publishes, so it must not restore a cache an earlier run could have poisoned.
+          package-manager-cache: false
       - run: npm ci
       - run: npm run build
       - name: wrangler deploy

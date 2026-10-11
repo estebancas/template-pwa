@@ -60,7 +60,7 @@ jobs:
       # Keep this tag equal to the installed @playwright/test version and to the image in the
       # `e2e:visual` script in package.json, so browsers and fonts match and visual baselines
       # render identically.
-      container-image: mcr.microsoft.com/playwright:v1.63.0-noble
+      container-image: mcr.microsoft.com/playwright:v1.64.0-noble
 
   # Not a required check. Skipped until the repo variable CLOUDFLARE_ACCOUNT_ID is set, so a new
   # project stays green (and raises no `production` approval) before Cloudflare is configured.

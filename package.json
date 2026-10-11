@@ -42,5 +42,8 @@
   },
   "overrides": {
     "qs": "^6.16.0"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }

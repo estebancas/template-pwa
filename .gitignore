@@ -5,6 +5,8 @@ playwright-report
 test-results
 .stryker-tmp
 reports
+dev-dist
+.wrangler
 .DS_Store
 .env
 .dev.vars

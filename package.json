@@ -1,5 +1,5 @@
 {
-  "name": "template-web-frontend",
+  "name": "template-pwa",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -16,6 +16,8 @@
     "size": "size-limit",
     "e2e": "playwright test",
     "e2e:visual": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work mcr.microsoft.com/playwright:v1.63.0-noble sh -c 'npm ci && npm run build && npx playwright test visual \"$@\"' -- \"$@\"",
+    "generate-icons": "pwa-assets-generator",
+    "deploy": "vite build && wrangler deploy",
     "postinstall": "patch-package"
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "@stryker-mutator/core": "^10.0.0",
     "@stryker-mutator/vitest-runner": "^10.0.0",
     "@types/node": "^26.0.0",
+    "@vite-pwa/assets-generator": "^1.0.4",
     "@vitest/coverage-v8": "^5.0.3",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
@@ -35,7 +38,9 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.0",
     "vite": "^8.3.2",
-    "vitest": "^5.0.3"
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^5.0.3",
+    "wrangler": "^4.149.0"
   },
   "engines": {
     "node": ">=22.12"

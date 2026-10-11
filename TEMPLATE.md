@@ -3,7 +3,7 @@
 Do these after creating a repo from this template, then delete this file or keep it as history.
 
 1. **Rename.** Set `name` in `package.json`, and the `<title>` and description in `index.html`. Replace the counter in `src/` with your app (keep tests alongside it: the coverage gate is 90%).
-   Then make it yours as a PWA: set `name`, `short_name`, `description` and the colours in the manifest in `vite.config.ts` (keep `background_color` equal to `background` in `pwa-assets.config.ts`), `theme-color` and `apple-mobile-web-app-title` in `index.html`. Replace `public/icon.svg` with your icon, run `npm run generate-icons`, and commit everything it changes in `public/`. Lint fails when the committed icons differ from the generator's output.
+   Then make it yours as a PWA: set `name`, `short_name`, `description` and the colours in the manifest in `vite.config.ts` (keep `background_color` equal to `background` in `pwa-assets.config.ts`), `theme-color` and `apple-mobile-web-app-title` in `index.html`. Replace `public/icon.svg` with your icon, run `npm run generate-icons:docker` (Docker must be running), and commit everything it changes in `public/`. Lint fails when the committed icons differ from the generator's output, and the output differs between macOS and Linux (the 64px icon did), so generate on Linux like the visual baselines.
 2. **Owner.** Change `@estebancas` in `.github/CODEOWNERS` if the owner differs.
 3. **Install and lock.** `npm install` once so `package-lock.json` is yours. CI uses `npm ci`.
 4. **Apply the repo settings** from a checkout of `estebancas/standards`:

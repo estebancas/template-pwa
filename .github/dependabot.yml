@@ -27,6 +27,14 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "vite"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "vite-plugin-pwa"
+        update-types: ["version-update:semver-major"]
+      # Peer of vite-plugin-pwa (declares ^1.0.0): a 2.x bump makes `npm install` fail with
+      # ERESOLVE while `npm ci` still passes. Revisit when vite-plugin-pwa widens its range.
+      - dependency-name: "@vite-pwa/assets-generator"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "wrangler"
+        update-types: ["version-update:semver-major"]
       # typescript-eslint declares a peer range on TypeScript (>=4.8.4 <6.1.0 when this template
       # was made), so a new minor or major can make `npm install` fail with ERESOLVE while
       # `npm ci` still passes. Bump by hand once typescript-eslint widens its range.

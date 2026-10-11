@@ -12,3 +12,6 @@
 /vitest.stryker.config.ts   @estebancas
 /stryker.config.json        @estebancas
 /playwright.config.ts       @estebancas
+/vite.config.ts             @estebancas
+/pwa-assets.config.ts       @estebancas
+/wrangler.jsonc            @estebancas

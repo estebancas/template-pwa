@@ -20,6 +20,20 @@ jobs:
   lint:
     name: Lint
     uses: estebancas/standards/.github/workflows/lint.yml@f98d9c425e9202e976b3df49d02e03a59bdda773 # v1
+    with:
+      # generate-icons is otherwise unexercised by CI, so a bad dev-tool bump (e.g. an ESM-only
+      # major) would pass every other check. Regenerate and compare to the committed icons and
+      # iOS splash images.
+      generated-assets-command: npm run generate-icons
+      generated-assets-path: public/
+      generated-assets-required-files: |
+        public/pwa-64x64.png
+        public/pwa-192x192.png
+        public/pwa-512x512.png
+        public/maskable-icon-512x512.png
+        public/apple-touch-icon-180x180.png
+        public/favicon.ico
+        public/apple-splash-*.png
 
   test:
     name: Unit tests + build
@@ -48,11 +62,30 @@ jobs:
       # render identically.
       container-image: mcr.microsoft.com/playwright:v1.63.0-noble
 
-  # Placeholder: not a required check. Replace with a real deploy (see TEMPLATE.md).
+  # Not a required check. Skipped until the repo variable CLOUDFLARE_ACCOUNT_ID is set, so a new
+  # project stays green (and raises no `production` approval) before Cloudflare is configured.
+  # See TEMPLATE.md for the setup: Worker name in wrangler.jsonc, the URL below, the variable
+  # and the CLOUDFLARE_API_TOKEN secret.
   deploy:
-    name: Deploy
-    needs: [test, e2e]
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    name: Deploy to Cloudflare
     runs-on: ubuntu-latest
+    needs: [test, e2e]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.CLOUDFLARE_ACCOUNT_ID != ''
+    environment:
+      name: production
+      # Replace with your Worker's URL: https://<worker name>.<account subdomain>.workers.dev
+      url: https://template-pwa.example.workers.dev
     steps:
-      - run: echo "No deploy configured. See TEMPLATE.md."
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: wrangler deploy
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

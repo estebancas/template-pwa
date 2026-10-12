@@ -1,8 +1,14 @@
 import './styles.css';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { registerSW } from 'virtual:pwa-register';
-import { mountApp } from './app';
+import { App } from './App';
 
 const root = document.getElementById('app');
 if (!root) throw new Error('Missing #app root element');
-mountApp(root);
+createRoot(root).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
 registerSW({ immediate: true });

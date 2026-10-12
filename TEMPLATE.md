@@ -7,7 +7,7 @@ Do these after creating a repo from this template, then delete this file or keep
 2. **Owner.** Change `@estebancas` in `.github/CODEOWNERS` if the owner differs.
 3. **Install and lock.** `npm install` once so `package-lock.json` is yours. CI uses `npm ci`.
 4. **Apply the repo settings** from a checkout of `estebancas/standards`:
-   `scripts/apply-repo-settings.sh apply <owner>/<repo>`, then `verify` should exit 0. The repo must be public (branch protection on the Free plan is public-only), and the script needs `gh` with admin on the repo and `jq`.
+   `scripts/apply-repo-settings.sh apply <owner>/<repo>`, then `verify` should exit 0. The repo must be public (branch protection on the Free plan is public-only), and the script needs `gh` with admin on the repo and `jq`. It also turns on CodeQL default setup and the `CodeQL alerts` ruleset, which blocks merging while a high or critical alert is open.
 5. **Visual baselines.** The committed baselines belong to the starter counter. After you change the UI, regenerate them in Docker: `npm run e2e:visual -- --update-snapshots`, and commit `e2e/__screenshots__/**`. Until they match, `End-to-end / e2e` fails.
 6. **Size budgets.** After your first real build, run `npm run size`, then set each limit in `.size-limit.json` to the measured size plus about 10%. Add a group per asset type you ship (for example fonts, measured raw).
 7. **Playwright tag.** Keep the image tag equal to the installed `@playwright/test` version in two places: `container-image` in `.github/workflows/ci.yml` and the `e2e:visual` script in `package.json`. Bump all three together.
@@ -18,4 +18,5 @@ Do these after creating a repo from this template, then delete this file or keep
 ## Known quirks (see `CLAUDE.md` for the details)
 
 - The Stryker patch under `patches/` is still needed. Check whether a Stryker release contains the fix for stryker-js#6210 before copying it into a newer project.
+- `Lint / lint` also runs zizmor, actionlint and gitleaks, and CodeQL (turned on by the settings script) blocks merging while a high or critical alert is open. Fix a finding, or suppress it with a written reason as the "Extra checks" section of `standards/docs/gotchas.md` describes. The `workflow-checks` and `secret-scan` inputs of `lint.yml` turn the first three off.
 - TypeScript is held below 6.1 because typescript-eslint's peer range stops there. Dependabot ignores TypeScript majors and minors for that reason.

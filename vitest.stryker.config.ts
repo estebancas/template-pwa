@@ -1,3 +1,4 @@
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 /**
@@ -6,9 +7,10 @@ import { defineConfig } from 'vitest/config';
  * without that field, for Stryker's use only. `npm test` still uses vitest.config.ts.
  */
 export default defineConfig({
+  plugins: [react()],
   test: {
     environment: 'jsdom',
     setupFiles: ['tests/setup.ts'],
-    include: ['tests/unit/**/*.test.ts', 'tests/integration/**/*.test.ts'],
+    include: ['tests/unit/**/*.test.{ts,tsx}', 'tests/integration/**/*.test.{ts,tsx}'],
   },
 });

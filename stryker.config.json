@@ -6,7 +6,7 @@
     "configFile": "vitest.stryker.config.ts",
     "related": false
   },
-  "mutate": ["src/**/*.ts", "!src/main.ts"],
+  "mutate": ["src/**/*.{ts,tsx}", "!src/main.tsx"],
   "coverageAnalysis": "perTest",
   "reporters": ["clear-text", "progress", "html"],
   "thresholds": {

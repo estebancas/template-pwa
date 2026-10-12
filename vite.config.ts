@@ -1,4 +1,5 @@
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite';
+import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { appleSplashScreens } from './pwa-assets.config.ts';
 
@@ -37,6 +38,7 @@ function appleSplashLinks(): Plugin {
 
 export default defineConfig({
   plugins: [
+    react(),
     appleSplashLinks(),
     VitePWA({
       registerType: 'autoUpdate',

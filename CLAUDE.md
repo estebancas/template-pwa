@@ -4,7 +4,7 @@
 
 ## What this is
 
-Replace this with one paragraph on what the project is. The repo started from `template-pwa`, which is a TypeScript and Vite progressive web app. See `TEMPLATE.md` for the per-project setup.
+Replace this with one paragraph on what the project is. The repo started from `template-pwa`, which is a React, TypeScript and Vite progressive web app. See `TEMPLATE.md` for the per-project setup.
 
 ## Commands
 

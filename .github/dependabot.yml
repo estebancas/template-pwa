@@ -33,6 +33,20 @@ updates:
       # ERESOLVE while `npm ci` still passes. Revisit when vite-plugin-pwa widens its range.
       - dependency-name: "@vite-pwa/assets-generator"
         update-types: ["version-update:semver-major"]
+      # React and its types and test utilities are coupled through peer ranges (Testing Library
+      # declares react and react-dom, the plugin declares vite). Upgrade them together by hand.
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@testing-library/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitejs/plugin-react"
+        update-types: ["version-update:semver-major"]
       - dependency-name: "wrangler"
         update-types: ["version-update:semver-major"]
       # typescript-eslint declares a peer range on TypeScript (>=4.8.4 <6.1.0 when this template
